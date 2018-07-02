@@ -92,4 +92,4 @@ Report:
 
 # Note
 
-this might not work for you, but feel free to expand on it.
+this might not fit your needs, but feel free to expand on it.
