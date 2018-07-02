@@ -190,13 +190,19 @@ while [[ $# -gt 0 ]]; do
 		remove)
 			# < enter removal mode >
 			expect_mode_init "remove"
-			get_index
+			get_index $@
+				if [[ $# -gt 1 ]]; then
+					shift
+				fi
 			expect_last
 			;;
 		go)
 			# < enter mode to open repository in new terminal >
 			expect_mode_init "go"
-			get_index
+			get_index $@
+				if [[ $# -gt 1 ]]; then
+					shift
+				fi
 			expect_last
 			;;
 		dump)
