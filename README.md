@@ -46,7 +46,7 @@ omni@base:~$ got -s
 ==================================================
 
 [ /home/omni ] (0)
-( omni ):
+( dotfiles ):
 
 Fetching origin
 
