@@ -257,6 +257,7 @@ case "$mode" in
 		for index in ${!registrations_path[@]}
 		do
 			repo=${registrations_path[index]}
+			update=$(git -C $repo remote update)
 			# if verbose -> print full status messages
 			if [[  $f_q -eq 0 ]]; then
 				echo "=================================================="
@@ -264,7 +265,7 @@ case "$mode" in
 				echo "[ $repo ] ($index)" | GREP_COLOR='31;1' grep --color=always -E "\([0-9]\)|$"
 				echo "( ${registrations_info[index]} ):"
 				echo ""
-				git -C $repo remote update
+				echo -e "$update"
 				echo ""
 				git -C $repo status | GREP_COLOR='30;47' grep --color=always -E "up to date|up-to-date|ahead|behind|diverged|$" | GREP_COLOR='30;47' grep --color=always -E "by [0-9]+ commit[s]*|$" | GREP_COLOR='39;4' grep --color=always -E "modified:|deleted:|new file:|renamed:|$"
 				echo ""
