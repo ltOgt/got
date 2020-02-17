@@ -13,7 +13,7 @@ registrations_line=("")
 registrations_path=("")
 registrations_info=("")
 
-registration_regex='^[ \s]*(/[a-zA-Z_0-9/]+)\s+"([^"]*)"$'
+registration_regex='^[ \s]*(/[a-zA-Z_0-9/\.]+)\s+"([^"]*)"$'
 
 mode=""
 f_c=0
