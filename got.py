@@ -52,9 +52,33 @@ def do_for_each_repo(func: Callable[[int, str], None]) -> None:
             i += 1
 
 
+
+# dirty but just have a glob here and fill in status_for_repo
+# keeps do_for_each_repo simpler
+_status_collect = {}
+
+# checks git status, prints to stdout and returns a short change description
 def status_for_repo(i: int, path: str) -> None:
-    print("[{i}] {l}".format(i=str(i), l=path))
-    print("[{i}] {l}".format(i=str(i), l=path))
+    print("------------------------------------------")
+    print("[{i}] - {p}".format(i=i, p=path))
+    print("")
+
+    if (not os.path.isdir(path)):
+        print("No such directory!")
+        return
+    if (not os.path.isdir(os.path.join(path, ".git"))):
+        print("Not a git repository!")
+        return
+
+    # visible output for user
+    os.system("git -C {p} remote update".format(p=path))
+    os.system('git -C {p} status | GREP_COLOR=\'30;47\' grep --color=always -E "up to date|up-to-date|ahead|behind|diverged|$" | GREP_COLOR=\'30;47\' grep --color=always -E "by [0-9]+ commit[s]*|$" | GREP_COLOR=\'39;4\' grep --color=always -E "modified:|deleted:|new file:|renamed:|$"'.format(p=path))
+
+    # store the change without printing
+    change = os.popen("git -C {p} status | grep -E 'ahead|behind|modified|diverged|deleted|renamed|new file'".format(p=path)).read()
+    _lines = [l.strip() for l in change.split("\n")]
+    _status_collect[i] = [path, *_lines]
+    
 
 def main():
     args = sys.argv[1:]
@@ -108,6 +132,14 @@ def main():
             sys.exit(0)
 
         do_for_each_repo(status_for_repo)
+
+        if _status_collect:
+            print("===========================")
+            for index in _status_collect:
+                _lines = _status_collect[index]
+                print("[{i}] - {p}".format(i=index, p=_lines[0]))
+                for line in _lines[1:]:
+                    print("   " + line)
 
         sys.exit(0)
 
