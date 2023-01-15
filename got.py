@@ -14,10 +14,8 @@ registration_location=os.path.join(registration_path, registration_file)
 
 def print_usage():
 	print('got (-r | register) [-p <PATH>]   registers repo')
-	print('got (-s | status) [-c] [-q]       [--quiet] status for registered repos [--control]')
+	print('got (-s | status)                 status for registered repos')
 	print('got (-l | list)                   list registered repos')
-	print('got remove [<NUMBER>]             remove registration')
-	print('got go [<NUMBER>]                 open repo in new terminal')
 
 def error(msg: str):
     print("ERR: " + msg)
@@ -141,13 +139,6 @@ def main():
                 for line in _lines[1:]:
                     print("   " + line)
 
-        sys.exit(0)
-
-
-    elif args[0] == "remove":
-        sys.exit(0)
-
-    elif args[0] == "go":
         sys.exit(0)
 
     print_usage()
